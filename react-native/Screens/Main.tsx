@@ -1,0 +1,30 @@
+import React, {FC, useEffect} from 'react';
+import {Text} from 'react-native';
+import {useStoreActions, useStoreState} from '../Stores';
+
+interface MainScreenProps {}
+
+const MainScreen: FC<MainScreenProps> = () => {
+  const {someStateValue} = useStoreState(({App: {someStateValue}}) => ({
+    someStateValue,
+  }));
+  const {getStateValue} = useStoreActions(({App: {getStateValue}}) => ({
+    getStateValue,
+  }));
+  useEffect(() => {
+    getStateValue();
+
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    console.log({someStateValue});
+  }, [someStateValue]);
+
+  return <Text>MainScreen</Text>;
+};
+
+export default MainScreen;
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const styles = {};
