@@ -1,5 +1,6 @@
 import React, {FC, useEffect} from 'react';
 import {Text} from 'react-native';
+import {Card} from 'react-native-paper';
 import {useStoreActions, useStoreState} from '../Stores';
 
 interface MainScreenProps {}
@@ -21,7 +22,11 @@ const MainScreen: FC<MainScreenProps> = () => {
     console.log({someStateValue});
   }, [someStateValue]);
 
-  return <Text>MainScreen</Text>;
+  return (
+    <Card>
+      <Text>Testing out paper. This card is a paper component</Text>
+    </Card>
+  );
 };
 
 export default MainScreen;
