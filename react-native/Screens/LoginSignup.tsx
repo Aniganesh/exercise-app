@@ -1,14 +1,13 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-paper';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {Dimensions} from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const viewWidth = windowWidth * 0.6;
 const viewHeight = windowHeight * 0.2;
-const colorPrimary = '#1995cd';
+const colorPrimary = '#1990d5';
 const colorContrast = '#ffffff';
 
 const LoginSignupScreen = () => {

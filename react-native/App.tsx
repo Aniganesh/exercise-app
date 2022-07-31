@@ -11,6 +11,7 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {StoreProvider} from 'easy-peasy';
 import store from './Stores';
 import LoginSignupScreen from './Screens/LoginSignup';
+import LoginScreen from './Screens/Login';
 
 const App: FC<unknown> = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -27,7 +28,7 @@ const App: FC<unknown> = () => {
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={backgroundStyle}>
-            <LoginSignupScreen />
+            <LoginScreen />
           </ScrollView>
         </SafeAreaView>
       </PaperProvider>
