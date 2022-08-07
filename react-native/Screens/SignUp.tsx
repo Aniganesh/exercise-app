@@ -12,9 +12,9 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const viewWidth = windowWidth * 0.6;
 const viewHeight = windowHeight * 0.4;
-const colorPrimary = '#1990d5';
+const colorPrimary = '#7e30d9';
 const colorContrast = '#ffffff';
-const colorSelection = '#a3d3ee';
+const colorSelection = '#d4baf2';
 const colorInputText = '#000';
 const textInputTheme = {
   colors: {
@@ -25,15 +25,26 @@ const textInputTheme = {
   },
 };
 
-const LoginScreen = () => {
+const SignUpScreen = () => {
+  const [firstName, setFirstName] = React.useState('');
+  const [lastName, setLastName] = React.useState('');
   const [emailId, setEmailId] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [isPasswordSecure, setIsPasswordSecure] = React.useState(true);
   const [isButtonLoading, setIsButtonLoading] = React.useState(false);
 
-  const handleLoginPress = () => {
+  const handleSignUpPress = () => {
     Keyboard.dismiss();
-    console.log('Pressed Login. Email: ' + emailId + ', Password: ' + password);
+    console.log(
+      'Pressed Sign Up. First Name: ' +
+        firstName +
+        ', Last Name: ' +
+        lastName +
+        ', Email: ' +
+        emailId +
+        ', Password: ' +
+        password,
+    );
     setIsButtonLoading(true);
     setTimeout(() => setIsButtonLoading(false), 1000); //Soft Delay for Loading icon in button
   };
@@ -43,6 +54,32 @@ const LoginScreen = () => {
       <View style={styles.viewChild}>
         {/* TODO: 1. Fix page scroll issue while keyboard is displayed.
                   2. Add Email Validations and display error message.  */}
+        <TextInput
+          label="first name"
+          value={firstName}
+          onChangeText={firstName =>
+            setFirstName(firstName.replace(/[^a-zA-Z0-9 ]+/g, ''))
+          }
+          theme={textInputTheme}
+          style={styles.input}
+          selectionColor={colorSelection}
+          mode="outlined"
+          maxLength={50}
+          textContentType="name"
+        />
+        <TextInput
+          label="last name"
+          value={lastName}
+          onChangeText={lastName =>
+            setLastName(lastName.replace(/[^a-zA-Z0-9 ]+/g, ''))
+          }
+          theme={textInputTheme}
+          style={styles.input}
+          selectionColor={colorSelection}
+          mode="outlined"
+          maxLength={50}
+          textContentType="familyName"
+        />
         <TextInput
           label="email"
           value={emailId}
@@ -80,12 +117,12 @@ const LoginScreen = () => {
         />
         <Button
           mode="contained"
-          uppercase={false}
           loading={isButtonLoading}
-          style={styles.buttonLogin}
+          uppercase={false}
+          style={styles.buttonSignUp}
           dark={true}
-          onPress={handleLoginPress}>
-          Login
+          onPress={handleSignUpPress}>
+          Sign Up
         </Button>
       </View>
     </View>
@@ -113,7 +150,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     width: '100%',
   },
-  buttonLogin: {
+  buttonSignUp: {
     position: 'relative',
     marginVertical: 40,
     width: '100%',
@@ -121,4 +158,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default SignUpScreen;

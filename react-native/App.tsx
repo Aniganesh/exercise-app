@@ -9,9 +9,11 @@ import {
 import {Provider as PaperProvider} from 'react-native-paper';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {StoreProvider} from 'easy-peasy';
+
 import store from './Stores';
-import LoginSignupScreen from './Screens/LoginSignup';
+import LoginSignUpScreen from './Screens/LoginSignUp';
 import LoginScreen from './Screens/Login';
+import SignUpScreen from './Screens/SignUp';
 
 const App: FC<unknown> = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -28,7 +30,7 @@ const App: FC<unknown> = () => {
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={backgroundStyle}>
-            <LoginScreen />
+            <SignUpScreen />
           </ScrollView>
         </SafeAreaView>
       </PaperProvider>

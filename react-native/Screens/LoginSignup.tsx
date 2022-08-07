@@ -8,21 +8,23 @@ const windowHeight = Dimensions.get('window').height;
 const viewWidth = windowWidth * 0.6;
 const viewHeight = windowHeight * 0.2;
 const colorPrimary = '#1990d5';
+const colorSecondary = '#9b30d9';
 const colorContrast = '#ffffff';
 
-const LoginSignupScreen = () => {
+const LoginSignUpScreen = () => {
   const handleLoginPress = () => {
     console.log('Pressed Login.');
   };
 
-  const handleSignupPress = () => {
-    console.log('Pressed Signup.');
+  const handleSignUpPress = () => {
+    console.log('Pressed Sign Up.');
   };
   return (
     <View style={styles.viewParent}>
       <View style={styles.viewChild}>
         <Button
           mode="contained"
+          uppercase={false}
           style={styles.buttonLogin}
           dark={true}
           onPress={handleLoginPress}>
@@ -30,10 +32,11 @@ const LoginSignupScreen = () => {
         </Button>
         <Button
           mode="outlined"
-          style={styles.buttonSignup}
-          color={colorPrimary}
-          onPress={handleSignupPress}>
-          Signup
+          uppercase={false}
+          style={styles.buttonSignUp}
+          color={colorSecondary}
+          onPress={handleSignUpPress}>
+          Sign Up
         </Button>
       </View>
     </View>
@@ -61,13 +64,13 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: colorPrimary,
   },
-  buttonSignup: {
+  buttonSignUp: {
     position: 'relative',
     marginVertical: 10,
     width: '100%',
-    borderColor: colorPrimary,
+    borderColor: colorSecondary,
     borderWidth: 1,
   },
 });
 
-export default LoginSignupScreen;
+export default LoginSignUpScreen;
