@@ -1,31 +1,19 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Keyboard,
-  TouchableWithoutFeedback,
-} from 'react-native';
-import {Button, TextInput} from 'react-native-paper';
-import {Dimensions} from 'react-native';
+import {View, Keyboard} from 'react-native';
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-const viewWidth = windowWidth * 0.6;
-const viewHeight = windowHeight * 0.4;
-const colorPrimary = '#1990d5';
-const colorContrast = '#ffffff';
-const colorSelection = '#a3d3ee';
-const colorInputText = '#000';
-const textInputTheme = {
-  colors: {
-    primary: colorPrimary,
-    text: colorInputText,
-    background: colorContrast,
-    placeholder: colorPrimary,
-  },
-};
+import {Button, TextInput} from 'react-native-paper';
+import {useHeaderHeight} from '@react-navigation/elements';
+
+import {
+  colorPrimary,
+  colorSelection,
+  LoginStyles,
+  textInputTheme,
+} from '../components/Styles';
 
 const LoginScreen = () => {
+  const styles = LoginStyles(useHeaderHeight());
+
   const [emailId, setEmailId] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [isPasswordSecure, setIsPasswordSecure] = React.useState(true);
@@ -75,6 +63,7 @@ const LoginScreen = () => {
                   : setIsPasswordSecure(true);
               }}
               color={colorPrimary}
+              forceTextInputFocus={false}
             />
           }
         />
@@ -91,34 +80,5 @@ const LoginScreen = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  viewParent: {
-    width: windowWidth,
-    height: windowHeight,
-    justifyContent: 'center',
-    backgroundColor: colorContrast,
-  },
-  viewChild: {
-    // flex: 1,
-    // backgroundColor: '#bbb',
-    width: viewWidth,
-    height: viewHeight,
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  input: {
-    position: 'relative',
-    marginVertical: 10,
-    width: '100%',
-  },
-  buttonLogin: {
-    position: 'relative',
-    marginVertical: 40,
-    width: '100%',
-    backgroundColor: colorPrimary,
-  },
-});
 
 export default LoginScreen;
