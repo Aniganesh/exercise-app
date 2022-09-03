@@ -14,16 +14,34 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 
 const App: FC<unknown> = () => {
+  const transitionName = 'slide_from_right';
 
   return (
     <StoreProvider store={store}>
       <PaperProvider>
-        {/* TODO: Routing between below screens */}
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Home">
-            <Stack.Screen name="Home" component={LoginSignUpScreen} />
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Sign Up" component={SignUpScreen} />
+            <Stack.Screen
+              name="Home"
+              component={LoginSignUpScreen}
+              options={{
+                animation: transitionName,
+              }}
+            />
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{
+                animation: transitionName,
+              }}
+            />
+            <Stack.Screen
+              name="Sign Up"
+              component={SignUpScreen}
+              options={{
+                animation: transitionName,
+              }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
