@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -8,7 +8,9 @@ import {
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
-const BasicViewSkeleton = (props: any) => {
+const BasicViewSkeleton: React.FC<{
+  children: ReactNode | ReactNode[];
+}> = props => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {

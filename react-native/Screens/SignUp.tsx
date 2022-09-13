@@ -1,17 +1,17 @@
 import React from 'react';
-import {View, Keyboard} from 'react-native';
-
+import {View, Keyboard, StyleSheet, Dimensions} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import {useHeaderHeight} from '@react-navigation/elements';
-
 import BasicViewSkeleton from '../components/BasicViewSkeleton';
-
 import {
+  colorContrast,
   colorPrimary,
   colorSelection,
-  SignUpStyles,
   textInputTheme,
 } from '../components/Styles';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const SignUpScreen = () => {
   const styles = SignUpStyles(useHeaderHeight());
@@ -48,8 +48,8 @@ const SignUpScreen = () => {
           <TextInput
             label="first name"
             value={firstName}
-            onChangeText={firstName =>
-              setFirstName(firstName.replace(/[^a-zA-Z0-9 ]+/g, ''))
+            onChangeText={_firstName =>
+              setFirstName(_firstName.replace(/[^a-zA-Z0-9 ]+/g, ''))
             }
             theme={textInputTheme}
             style={styles.input}
@@ -61,8 +61,8 @@ const SignUpScreen = () => {
           <TextInput
             label="last name"
             value={lastName}
-            onChangeText={lastName =>
-              setLastName(lastName.replace(/[^a-zA-Z0-9 ]+/g, ''))
+            onChangeText={_lastName =>
+              setLastName(_lastName.replace(/[^a-zA-Z0-9 ]+/g, ''))
             }
             theme={textInputTheme}
             style={styles.input}
@@ -74,7 +74,7 @@ const SignUpScreen = () => {
           <TextInput
             label="email"
             value={emailId}
-            onChangeText={emailId => setEmailId(emailId.replace(/[ ]+/g, ''))}
+            onChangeText={_emailId => setEmailId(_emailId.replace(/[ ]+/g, ''))}
             theme={textInputTheme}
             style={styles.input}
             selectionColor={colorSelection}
@@ -87,7 +87,7 @@ const SignUpScreen = () => {
             label="password"
             secureTextEntry={isPasswordSecure}
             value={password}
-            onChangeText={password => setPassword(password)}
+            onChangeText={_password => setPassword(_password)}
             theme={textInputTheme}
             style={styles.input}
             selectionColor={colorSelection}
@@ -123,3 +123,33 @@ const SignUpScreen = () => {
 };
 
 export default SignUpScreen;
+
+export const SignUpStyles = (headerHeight: number) =>
+  StyleSheet.create({
+    viewParent: {
+      width: windowWidth,
+      height: windowHeight - headerHeight,
+      justifyContent: 'center',
+      backgroundColor: colorContrast,
+    },
+    viewChild: {
+      // flex: 1,
+      // backgroundColor: '#bbb',
+      width: windowWidth * 0.6,
+      height: (windowHeight - headerHeight) * 0.2,
+      alignSelf: 'center',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    input: {
+      position: 'relative',
+      marginVertical: 10,
+      width: '100%',
+    },
+    buttonSignUp: {
+      position: 'relative',
+      marginVertical: 40,
+      width: '100%',
+      backgroundColor: colorPrimary,
+    },
+  });

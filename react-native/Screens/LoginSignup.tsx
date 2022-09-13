@@ -1,24 +1,26 @@
-import React from 'react';
-import {View} from 'react-native';
+import React, {FC} from 'react';
+import {Dimensions, StyleSheet, View} from 'react-native';
 
 import {Button} from 'react-native-paper';
 import {useHeaderHeight} from '@react-navigation/elements';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import BasicViewSkeleton from '../components/BasicViewSkeleton';
-import {colorPrimary, LoginSignupStyles} from '../components/Styles';
+import {colorPrimary} from '../components/Styles';
 
-const LoginSignUpScreen = ({ navigation }) => {
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+const LoginSignUpScreen: FC<{
+  navigation: {navigate: (path: string) => void};
+}> = ({navigation}) => {
   const styles = LoginSignupStyles(useHeaderHeight());
   const handleLoginPress = () => {
     console.log('Pressed Login.');
-    navigation.navigate('Login')
+    navigation.navigate('Login');
   };
 
   const handleSignUpPress = () => {
     console.log('Pressed Sign Up.');
-    navigation.navigate('Sign Up')
+    navigation.navigate('Sign Up');
   };
   return (
     <BasicViewSkeleton>
@@ -47,3 +49,34 @@ const LoginSignUpScreen = ({ navigation }) => {
 };
 
 export default LoginSignUpScreen;
+
+export const LoginSignupStyles = (headerHeight: number) =>
+  StyleSheet.create({
+    viewParent: {
+      width: windowWidth,
+      height: windowHeight - headerHeight,
+      justifyContent: 'center',
+    },
+    viewChild: {
+      // flex: 1,
+      // backgroundColor: '#105090',
+      width: windowWidth * 0.6,
+      height: (windowHeight - headerHeight) * 0.2,
+      alignSelf: 'center',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    buttonLogin: {
+      position: 'relative',
+      marginVertical: 10,
+      width: '100%',
+      backgroundColor: colorPrimary,
+    },
+    buttonSignUp: {
+      position: 'relative',
+      marginVertical: 10,
+      width: '100%',
+      borderColor: colorPrimary,
+      borderWidth: 1,
+    },
+  });
