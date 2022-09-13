@@ -1,37 +1,49 @@
 import React, {FC} from 'react';
 import type {} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  useColorScheme,
-} from 'react-native';
 import {Provider as PaperProvider} from 'react-native-paper';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import CustomButton from './components/CustomButton';
+import {NavigationContainer} from '@react-navigation/native';
 import {StoreProvider} from 'easy-peasy';
+
 import store from './Stores';
-import MainScreen from './Screens/Main';
+import LoginScreen from './Screens/Login';
+import SignUpScreen from './Screens/SignUp';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import LoginSignUpScreen from './Screens/LoginSignup';
+import {theme} from './Theme';
+
+const Stack = createNativeStackNavigator();
 
 const App: FC<unknown> = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  const transitionName = 'slide_from_right';
 
   return (
     <StoreProvider store={store}>
-      <PaperProvider>
-        <SafeAreaView style={backgroundStyle}>
-          <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-          <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
-            style={backgroundStyle}>
-            <MainScreen />
-            <CustomButton />
-          </ScrollView>
-        </SafeAreaView>
+      <PaperProvider theme={theme}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Home">
+            <Stack.Screen
+              name="Home"
+              component={LoginSignUpScreen}
+              options={{
+                animation: transitionName,
+              }}
+            />
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{
+                animation: transitionName,
+              }}
+            />
+            <Stack.Screen
+              name="Sign Up"
+              component={SignUpScreen}
+              options={{
+                animation: transitionName,
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
       </PaperProvider>
     </StoreProvider>
   );
