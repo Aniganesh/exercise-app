@@ -1,35 +1,37 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {View, Keyboard, StyleSheet, Dimensions} from 'react-native';
-
-import {Button, TextInput} from 'react-native-paper';
+import {Button, TextInput, TextInputProps} from 'react-native-paper';
 import {useHeaderHeight} from '@react-navigation/elements';
 
 import BasicViewSkeleton from '../components/BasicViewSkeleton';
-
 import {
-  colorContrast,
+  colorBackground,
   colorPrimary,
   colorSelection,
   textInputTheme,
-} from '../components/Styles';
+} from '../Theme';
+import {Formik} from 'formik';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+interface LoginValues {
+  email: string;
+  password: string;
+}
+
 const LoginScreen = () => {
   const styles = LoginStyles(useHeaderHeight());
-
-  const [emailId, setEmailId] = React.useState('');
-  const [password, setPassword] = React.useState('');
   const [isPasswordShown, setIsPasswordShown] = React.useState(true);
-  const [isButtonLoading, setIsButtonLoading] = React.useState(false);
 
-  const handleLoginPress = () => {
+  const handleLogin = ({email, password}: LoginValues) => {
+    console.log({email, password});
     Keyboard.dismiss();
-    console.log('Pressed Login. Email: ' + emailId + ', Password: ' + password);
-    setIsButtonLoading(true);
-    setTimeout(() => setIsButtonLoading(false), 1000); //Soft Delay for Loading icon in button
   };
+  const formConfig = useMemo(
+    () => getFormConfig(styles, isPasswordShown, setIsPasswordShown),
+    [styles, isPasswordShown, setIsPasswordShown],
+  );
 
   return (
     <BasicViewSkeleton>
@@ -37,51 +39,35 @@ const LoginScreen = () => {
         <View style={styles.viewChild}>
           {/* TODO: 1. Fix page scroll issue while keyboard is displayed.
                   2. Add Email Validations and display error message.  */}
-          <TextInput
-            label="email"
-            value={emailId}
-            onChangeText={_emailId => setEmailId(_emailId.replace(/[ ]+/g, ''))}
-            theme={textInputTheme}
-            style={styles.input}
-            selectionColor={colorSelection}
-            mode="outlined"
-            autoCapitalize="none"
-            maxLength={50}
-            textContentType="emailAddress"
-          />
-          <TextInput
-            label="password"
-            secureTextEntry={isPasswordShown}
-            value={password}
-            onChangeText={_password => setPassword(_password)}
-            theme={textInputTheme}
-            style={styles.input}
-            selectionColor={colorSelection}
-            mode="outlined"
-            maxLength={50}
-            textContentType="password"
-            right={
-              <TextInput.Icon
-                name={isPasswordShown ? 'eye' : 'eye-off'}
-                onPress={() => {
-                  isPasswordShown
-                    ? setIsPasswordShown(false)
-                    : setIsPasswordShown(true);
-                }}
-                color={colorPrimary}
-                forceTextInputFocus={false}
-              />
-            }
-          />
-          <Button
-            mode="contained"
-            uppercase={false}
-            loading={isButtonLoading}
-            style={styles.buttonLogin}
-            dark={true}
-            onPress={handleLoginPress}>
-            Login
-          </Button>
+          <Formik
+            initialValues={{email: '', password: ''}}
+            onSubmit={handleLogin}>
+            {({handleChange, values, isSubmitting, handleSubmit}) => (
+              <>
+                {formConfig.map(({type, props, name}) => {
+                  if (type === 'text') {
+                    return (
+                      <TextInput
+                        key={name}
+                        {...(props as TextInputProps)}
+                        onChangeText={handleChange(name)}
+                        value={values[name as keyof LoginValues]}
+                      />
+                    );
+                  }
+                })}
+                <Button
+                  onPress={handleSubmit}
+                  mode="contained"
+                  uppercase={false}
+                  loading={isSubmitting}
+                  style={styles.buttonLogin}
+                  dark={true}>
+                  Login
+                </Button>
+              </>
+            )}
+          </Formik>
         </View>
       </View>
     </BasicViewSkeleton>
@@ -96,7 +82,7 @@ export const LoginStyles = (headerHeight: number) =>
       width: windowWidth,
       height: windowHeight - headerHeight,
       justifyContent: 'center',
-      backgroundColor: colorContrast,
+      backgroundColor: colorBackground,
     },
     viewChild: {
       // flex: 1,
@@ -119,3 +105,50 @@ export const LoginStyles = (headerHeight: number) =>
       backgroundColor: colorPrimary,
     },
   });
+
+const getFormConfig = (
+  styles: Record<string, any>,
+  isPasswordShown: boolean,
+  setIsPasswordShown: (shown: boolean) => void,
+) => [
+  {
+    type: 'text',
+    name: 'email',
+    props: {
+      label: 'email',
+      theme: textInputTheme,
+      style: styles.input,
+      selectionColor: colorSelection,
+      mode: 'outlined',
+      autoCapitalize: 'none',
+      maxLength: 50,
+      textContentType: 'emailAddress',
+    },
+  },
+  {
+    type: 'text',
+    name: 'password',
+    props: {
+      label: 'password',
+      secureTextEntry: isPasswordShown,
+      theme: textInputTheme,
+      style: styles.input,
+      selectionColor: colorSelection,
+      mode: 'outlined',
+      maxLength: 50,
+      textContentType: 'password',
+      right: (
+        <TextInput.Icon
+          icon={isPasswordShown ? 'eye' : 'eye-off'}
+          onPress={() => {
+            isPasswordShown
+              ? setIsPasswordShown(false)
+              : setIsPasswordShown(true);
+          }}
+          color={colorPrimary}
+          forceTextInputFocus={false}
+        />
+      ),
+    },
+  },
+];
