@@ -4,7 +4,7 @@ import {Dimensions, StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-paper';
 import {useHeaderHeight} from '@react-navigation/elements';
 import BasicViewSkeleton from '../components/BasicViewSkeleton';
-import {colorPrimary} from '../components/Styles';
+import {colorPrimary} from '../Theme';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
