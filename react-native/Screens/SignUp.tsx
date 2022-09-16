@@ -10,16 +10,10 @@ import {
   textInputTheme,
 } from '../Theme/index';
 import {Formik} from 'formik';
+import {SignupValues} from '../Models/User/@types';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-
-interface SignupValues {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-}
 
 const SignUpScreen = () => {
   const styles = SignUpStyles(useHeaderHeight());

@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {View, Keyboard, StyleSheet, Dimensions} from 'react-native';
 import {Button, TextInput, TextInputProps} from 'react-native-paper';
 import {useHeaderHeight} from '@react-navigation/elements';
-
+import {LoginValues} from '../Models/User/@types';
 import BasicViewSkeleton from '../components/BasicViewSkeleton';
 import {
   colorBackground,
@@ -14,11 +14,6 @@ import {Formik} from 'formik';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-
-interface LoginValues {
-  email: string;
-  password: string;
-}
 
 const LoginScreen = () => {
   const styles = LoginStyles(useHeaderHeight());
