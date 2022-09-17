@@ -19,6 +19,7 @@ export const textInputTheme = {
 
 export const theme: Theme = {
   ...DefaultTheme,
+  roundness: 2,
   colors: {
     ...DefaultTheme.colors,
     primary: colorPrimary,
