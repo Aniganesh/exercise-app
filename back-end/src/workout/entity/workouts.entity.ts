@@ -1,18 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import { User } from 'src/users/users.schema';
 import { Exercise, ExerciseSchema } from './exercises.entity';
 
-export type WorkoutDocument = Workout & Document;
-
-function validateExerciseCount(val: any) {
-  return val.length < 3;
-}
-
-const exerciseCountValidator = [validateExerciseCount, 'Exceeded limit'];
-
 @Schema()
-export class Workout {
+export class Workout extends Document {
+
+  @Prop()
+  _id: mongoose.Schema.Types.ObjectId;
+
   @Prop()
   name: string;
 
@@ -22,7 +18,6 @@ export class Workout {
   @Prop({
     type: [ExerciseSchema],
     ref: 'exercise',
-    validate: exerciseCountValidator,
   })
   exercises: Exercise[];
 }

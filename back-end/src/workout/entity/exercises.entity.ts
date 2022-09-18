@@ -12,13 +12,13 @@ export class Exercise {
   name: string;
 
   @Prop()
-  count?: number;
+  rep?: number;
 
   @Prop()
-  time?: number;
+  duration?: number;
 
   @Prop()
-  rep: number;
+  set: number;
 
   @Prop()
   interval?: number;

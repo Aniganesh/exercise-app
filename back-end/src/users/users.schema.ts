@@ -7,10 +7,13 @@ export class User extends Document {
   @Prop({ type: String, required: false })
   id: MongooseSchema.Types.ObjectId;
 
-  @Prop({ type: String })
-  name: string;
+  @Prop()
+  firstName: string;
 
-  @Prop({ unique: true, type: String })
+  @Prop()
+  lastName: string;
+
+  @Prop({ unique: true, type: String, lowercase: true })
   email: string;
 
   @ExcludeProperty(User.name)
