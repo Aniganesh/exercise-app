@@ -1,5 +1,7 @@
 import {
   ConflictException,
+  forwardRef,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -8,17 +10,23 @@ import { Model } from 'mongoose';
 import { CreateUserDto } from './create-user.dto';
 import { User } from './users.schema';
 import { hash } from 'bcrypt';
+import { AuthService } from 'src/auth/auth.service';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+  constructor(
+    @Inject(forwardRef(() => AuthService)) private authService: AuthService,
+    @InjectModel(User.name) private userModel: Model<User>,
+  ) {}
 
   async create(user: CreateUserDto): Promise<any> {
+    console.warn('create');
     if (user.password)
       user.password = await hash(user.password, process.env.SALT);
-    return await new this.userModel(user).save().catch(() => {
+    const savedUser = await new this.userModel(user).save().catch(() => {
       throw new ConflictException('Email already exists');
     });
+    return this.authService.login(savedUser);
   }
 
   async getUserByEmail(email: string): Promise<User> {
