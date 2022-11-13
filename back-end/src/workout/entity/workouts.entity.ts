@@ -5,19 +5,18 @@ import { Exercise, ExerciseSchema } from './exercises.entity';
 
 @Schema()
 export class Workout extends Document {
-
   @Prop()
   _id: mongoose.Schema.Types.ObjectId;
 
   @Prop()
   name: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'user' })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: User.name })
   user: User;
 
   @Prop({
     type: [ExerciseSchema],
-    ref: 'exercise',
+    ref: Exercise.name,
   })
   exercises: Exercise[];
 }
