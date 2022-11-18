@@ -4,12 +4,15 @@ import {StoreProvider} from 'easy-peasy';
 import store from './Stores';
 import {theme} from './Theme';
 import RouteNavigation from './Routes';
+import RootProvider from './Contexts';
 
 const App: FC = () => {
   return (
     <StoreProvider store={store}>
       <PaperProvider theme={theme}>
-        <RouteNavigation />
+        <RootProvider>
+          <RouteNavigation />
+        </RootProvider>
       </PaperProvider>
     </StoreProvider>
   );

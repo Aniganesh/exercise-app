@@ -4,12 +4,13 @@ import {useState, useEffect} from 'react';
 const useBoot = () => {
   const [isBootDone, setIsBootDone] = useState(false);
 
-  axios.defaults.baseURL = 'http://localhost:8000';
+  axios.defaults.baseURL = 'http://fit-nation.onrender.com';
 
   useEffect(() => {
-    setTimeout(() => {
+    (async () => {
+      // TODO: Use AsyncStorage to check for access token and login with it.
       setIsBootDone(true);
-    }, 3000);
+    })();
   }, []);
 
   return {isBootDone};

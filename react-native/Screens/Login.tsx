@@ -11,6 +11,7 @@ import {
   textInputTheme,
 } from '../Theme';
 import {Formik} from 'formik';
+import {useStoreActions} from '../Stores';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -18,9 +19,9 @@ const windowHeight = Dimensions.get('window').height;
 const LoginScreen = () => {
   const styles = LoginStyles(useHeaderHeight());
   const [isPasswordShown, setIsPasswordShown] = React.useState(true);
-
-  const handleLogin = ({email, password}: LoginValues) => {
-    console.log({email, password});
+  const {login} = useStoreActions(({AuthStore: {login}}) => ({login}));
+  const handleLogin = (loginValues: LoginValues) => {
+    login(loginValues);
     Keyboard.dismiss();
   };
   const formConfig = useMemo(

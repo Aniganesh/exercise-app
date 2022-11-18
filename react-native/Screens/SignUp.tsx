@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 import {View, Keyboard, StyleSheet, Dimensions} from 'react-native';
 import {Button, TextInput, TextInputProps} from 'react-native-paper';
 import {useHeaderHeight} from '@react-navigation/elements';
@@ -9,34 +9,42 @@ import {
   colorSelection,
   textInputTheme,
 } from '../Theme/index';
-import {Formik} from 'formik';
+import {Formik, FormikHelpers} from 'formik';
 import {SignupValues} from '../Models/User/@types';
+import {useStoreActions} from '../Stores';
+import {AxiosError} from 'axios';
+import {SnackbarContext} from '../Contexts/Snackbar';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const SignUpScreen = () => {
   const styles = SignUpStyles(useHeaderHeight());
+  const {signup} = useStoreActions(({AuthStore: {signup}}) => ({signup}));
+  const [isPasswordShown, setIsPasswordShown] = useState(true);
 
-  const [isPasswordShown, setIsPasswordShown] = React.useState(true);
+  const {addSnackbarMessage} = useContext(SnackbarContext);
 
-  const handleSignUpPress = async ({
-    email,
-    password,
-    firstName,
-    lastName,
-  }: SignupValues) => {
+  const handleSignUpPress = async (
+    signupValues: SignupValues,
+    helpers: FormikHelpers<SignupValues>,
+  ) => {
     Keyboard.dismiss();
-    console.log(
-      'Pressed Sign Up. First Name: ' +
-        firstName +
-        ', Last Name: ' +
-        lastName +
-        ', Email: ' +
-        email +
-        ', Password: ' +
-        password,
-    );
+    signup(signupValues).catch((err: AxiosError) => {
+      console.log({
+        message: err.message,
+        name: err.name,
+        code: err.code,
+        config: err.config,
+        errResponseData: err.response?.data,
+        errResponse: err.response,
+      });
+      helpers.resetForm();
+      addSnackbarMessage({
+        message: 'Failed to sign up. Please try again later.',
+        variant: 'success',
+      });
+    });
   };
   const formConfig = useMemo(
     () => getFormConfig(styles, isPasswordShown, setIsPasswordShown),
