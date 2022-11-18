@@ -14,12 +14,10 @@ const LoginSignUpScreen: FC<{
 }> = ({navigation}) => {
   const styles = LoginSignupStyles(useHeaderHeight());
   const handleLoginPress = () => {
-    console.log('Pressed Login.');
     navigation.navigate('login');
   };
 
   const handleSignUpPress = () => {
-    console.log('Pressed Sign Up.');
     navigation.navigate('Sign Up');
   };
   return (
