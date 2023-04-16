@@ -3,7 +3,7 @@ import {LoginValues, SignupValues, User} from './@types';
 
 export class UserModel {
   static login = async (params: LoginValues) => {
-    return axios.post<{accessToken: string}>('/login', params);
+    return axios.post<{access_token: string}>('/auth/login', params);
   };
   static signup = async (data: SignupValues) => {
     console.log(JSON.stringify(data));
@@ -15,7 +15,7 @@ export class UserModel {
   };
 
   static getProfile = async () => {
-    return axios.get<User>('/profile');
+    return axios.get<User>('/auth/profile');
   };
 }
 

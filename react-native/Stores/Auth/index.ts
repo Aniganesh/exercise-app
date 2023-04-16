@@ -22,23 +22,33 @@ export interface TAuthStore {
 export const AuthStore: TAuthStore = {
   user: undefined,
   login: thunk(async (actions, loginValues) => {
-    const {
-      data: {accessToken},
-    } = await UserModel.login(loginValues);
-    return actions.loginUsingAccessToken(accessToken);
+    try {
+      const {
+        data: {access_token: accessToken},
+      } = await UserModel.login(loginValues);
+      return actions.loginUsingAccessToken(accessToken);
+    } catch (err) {
+      console.error(err);
+      return;
+    }
   }),
   loginUsingAccessToken: thunk(async (actions, accessToken) => {
     actions.setAccessToken(accessToken);
-    const {data: user} = await UserModel.getProfile();
-    actions.setUser(user);
-    return user;
+    try {
+      const {data: user} = await UserModel.getProfile();
+      console.log({user});
+      actions.setUser(user);
+      return user;
+    } catch (err) {
+      console.error(JSON.stringify(err));
+    }
   }),
   setUser: action((state, user) => {
     state.user = user;
   }),
   setAccessToken: action((state, accessToken) => {
     if (accessToken) {
-      axios.defaults.headers.common.Authorization = accessToken;
+      axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
     } else {
       delete axios.defaults.headers.common.Authorization;
     }

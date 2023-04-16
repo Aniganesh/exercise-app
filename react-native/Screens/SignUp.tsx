@@ -30,21 +30,25 @@ const SignUpScreen = () => {
     helpers: FormikHelpers<SignupValues>,
   ) => {
     Keyboard.dismiss();
-    signup(signupValues).catch((err: AxiosError) => {
-      console.log({
-        message: err.message,
-        name: err.name,
-        code: err.code,
-        config: err.config,
-        errResponseData: err.response?.data,
-        errResponse: err.response,
+    signup(signupValues)
+      .catch((err: AxiosError) => {
+        console.log({
+          message: err.message,
+          name: err.name,
+          code: err.code,
+          config: err.config,
+          errResponseData: err.response?.data,
+          errResponse: err.response,
+        });
+        helpers.resetForm();
+        addSnackbarMessage({
+          message: 'Failed to sign up. Please try again later.',
+          variant: 'success',
+        });
+      })
+      .then(() => {
+        console.log('signed up successfully');
       });
-      helpers.resetForm();
-      addSnackbarMessage({
-        message: 'Failed to sign up. Please try again later.',
-        variant: 'success',
-      });
-    });
   };
   const formConfig = useMemo(
     () => getFormConfig(styles, isPasswordShown, setIsPasswordShown),
