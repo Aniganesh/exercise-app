@@ -12,7 +12,6 @@ export class AuthService {
   ) {}
 
   async validate(email: string, password: string): Promise<User | null> {
-    console.log({ email, password });
     const user = await this.usersService.getUserByEmail(email);
     if (!user) return null;
     const passwordIsValid = bcrypt.compareSync(password, user.password);
@@ -32,15 +31,13 @@ export class AuthService {
     };
   }
 
-  verify(accessToken: string) {
-    const fixedAccessToken = accessToken.replace('Bearer ', '');
-    console.log({ fixedAccessToken });
-    const decoded = this.jwtService.verify(fixedAccessToken, {
-      secret: process.env.SECRET,
-    });
-    console.log(JSON.stringify(decoded));
-    const user = this.usersService.getUserByEmail(decoded.email);
-    if (!user) throw new Error('User not found');
-    return user;
-  }
+  // verify(accessToken: string) {
+  //   const fixedAccessToken = accessToken.replace('Bearer ', '');
+  //   const decoded = this.jwtService.verify(fixedAccessToken, {
+  //     secret: process.env.SECRET,
+  //   });
+  //   const user = this.usersService.getUserByEmail(decoded.email);
+  //   if (!user) throw new Error('User not found');
+  //   return user;
+  // }
 }
