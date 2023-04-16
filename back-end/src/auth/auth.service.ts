@@ -36,6 +36,7 @@ export class AuthService {
     const decoded = this.jwtService.verify(fixedAccessToken, {
       secret: process.env.SECRET,
     });
+    console.log(JSON.stringify(decoded));
     const user = this.usersService.getUserByEmail(decoded.email);
     if (!user) throw new Error('User not found');
     return user;
