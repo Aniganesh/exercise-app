@@ -12,6 +12,7 @@ export class AuthService {
   ) {}
 
   async validate(email: string, password: string): Promise<User | null> {
+    console.log({ email, password });
     const user = await this.usersService.getUserByEmail(email);
     if (!user) return null;
     const passwordIsValid = bcrypt.compareSync(password, user.password);
@@ -33,6 +34,7 @@ export class AuthService {
 
   verify(accessToken: string) {
     const fixedAccessToken = accessToken.replace('Bearer ', '');
+    console.log({ fixedAccessToken });
     const decoded = this.jwtService.verify(fixedAccessToken, {
       secret: process.env.SECRET,
     });

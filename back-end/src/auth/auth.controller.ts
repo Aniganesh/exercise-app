@@ -32,6 +32,7 @@ export class AuthController {
   @ApiOperation({ summary: 'Current logged in user' })
   @ApiBearerAuth()
   me(@Request() req) {
+    console.log({ user: req.user });
     return req.user;
     // Doesn't seem to make sense without knowledge of how passport works.
     // If you've  forgotten, refer: https://docs.nestjs.com/security/authentication#implement-protected-route-and-jwt-strategy-guards
