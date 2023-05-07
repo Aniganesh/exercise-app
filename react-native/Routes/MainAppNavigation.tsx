@@ -13,6 +13,7 @@ const MainAppNavigation: FC<MainAppNavigationProps> = () => {
       <MainAppNavigationStack.Navigator initialRouteName="Home">
         <MainAppNavigationStack.Screen
           name="Home"
+          navigationKey="Home"
           component={MainScreen}
           options={{
             animation: transitionName,

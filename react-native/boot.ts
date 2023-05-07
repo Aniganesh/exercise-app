@@ -7,7 +7,7 @@ import {useStoreActions} from './Stores';
 const useBoot = () => {
   const [isBootDone, setIsBootDone] = useState(false);
 
-  axios.defaults.baseURL = 'http://fit-nation.onrender.com';
+  axios.defaults.baseURL = 'https://ce41-49-206-116-125.ngrok-free.app';
   const {loginUsingAccessToken} = useStoreActions(
     ({AuthStore: {loginUsingAccessToken}}) => ({loginUsingAccessToken}),
   );

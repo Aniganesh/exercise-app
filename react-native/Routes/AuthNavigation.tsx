@@ -16,6 +16,7 @@ const AuthNavigation: FC<AuthNavigationProps> = () => {
         <AuthNavigationStack.Screen
           name="Home"
           component={LoginSignUpScreen}
+          navigationKey="Home"
           options={{
             animation: transitionName,
             header: () => null,

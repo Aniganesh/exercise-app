@@ -1,7 +1,7 @@
 import React, {FC, useEffect} from 'react';
 import {Text} from 'react-native';
 import {Card} from 'react-native-paper';
-import {useStoreActions, useStoreState} from '../Stores';
+import {useStoreActions, useStoreState} from '../../Stores';
 
 interface MainScreenProps {}
 

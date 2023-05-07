@@ -3,4 +3,5 @@ export const routeConstants = {
   auth: '/auth',
   loginPath: '/auth/login',
   signupPath: '/auth/signup',
+  home: '/home',
 };

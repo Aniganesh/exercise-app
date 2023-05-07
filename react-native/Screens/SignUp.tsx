@@ -43,7 +43,7 @@ const SignUpScreen = () => {
         helpers.resetForm();
         addSnackbarMessage({
           message: 'Failed to sign up. Please try again later.',
-          variant: 'success',
+          variant: 'error',
         });
       })
       .then(() => {

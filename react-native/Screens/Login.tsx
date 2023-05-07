@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {FC, useMemo} from 'react';
 import {View, Keyboard, StyleSheet, Dimensions} from 'react-native';
 import {Button, TextInput, TextInputProps} from 'react-native-paper';
 import {useHeaderHeight} from '@react-navigation/elements';
@@ -16,13 +16,16 @@ import {useStoreActions} from '../Stores';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const LoginScreen = () => {
+const LoginScreen: FC<{
+  navigation: {navigate: (path: string) => void};
+}> = ({navigation}) => {
   const styles = LoginStyles(useHeaderHeight());
   const [isPasswordShown, setIsPasswordShown] = React.useState(true);
   const {login} = useStoreActions(({AuthStore: {login}}) => ({login}));
-  const handleLogin = (loginValues: LoginValues) => {
-    login(loginValues);
+  const handleLogin = async (loginValues: LoginValues) => {
     Keyboard.dismiss();
+    await login(loginValues);
+    navigation.navigate('Home');
   };
   const formConfig = useMemo(
     () => getFormConfig(styles, isPasswordShown, setIsPasswordShown),
